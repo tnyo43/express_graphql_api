@@ -14,13 +14,17 @@ const userSchema = buildSchema(`
     users(name: String): [User]
   }
 
+  type Mutation {
+    updateUserName(userId: Int!, name: String!): User
+  }
+
   type User {
     userId: Int!
     name: String
   }
 `);
 
-const userData = [
+let userData = [
   {
     userId: 1,
     name: "Alice",
@@ -40,6 +44,13 @@ const getUser = (args) =>
 
 const getUsers = (args) =>
   !!args.name ? userData.filter((user) => user.name === args.name) : userData;
+
+const updateUserName = (args) => {
+  userData = userData.map((user) =>
+    user.userId === args.userId ? { ...user, name: args.name } : user
+  );
+  return getUser(args);
+};
 
 const app = express();
 
@@ -61,6 +72,7 @@ app.use(
     rootValue: {
       user: getUser,
       users: getUsers,
+      updateUserName,
     },
     graphiql: true,
   })
