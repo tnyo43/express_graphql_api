@@ -4,11 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ./src/server.js"
+    "start": "nodemon ./src/server.js"
   },
   "dependencies": {
     "express": "^4.18.0",
     "express-graphql": "^0.12.0",
     "graphql": "^16.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
   }
 }
