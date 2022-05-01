@@ -1,78 +1,58 @@
 const express = require("express");
 const expressGraphql = require("express-graphql").graphqlHTTP;
 const { buildSchema } = require("graphql");
-
-const messageSchema = buildSchema(`
-  type Query {
-    message: String
-  }
-`);
+const db = require("../models/");
 
 const userSchema = buildSchema(`
   type Query {
-    user(userId: Int!): User
+    user(id: Int!): User
     users(name: String): [User]
   }
 
   type Mutation {
-    updateUserName(userId: Int!, name: String!): User
+    registerUser(name: String!, email: String!): User
+    updateUserName(id: Int!, name: String!): User
+    updateUserEmail(id: Int!, email: String!): User
   }
 
   type User {
-    userId: Int!
-    name: String
+    id: Int!
+    name: String!
+    email: String!
   }
 `);
 
-let userData = [
-  {
-    userId: 1,
-    name: "Alice",
-  },
-  {
-    userId: 2,
-    name: "Bob",
-  },
-  {
-    userId: 3,
-    name: "Chis",
-  },
-];
+const getUser = async (args) =>
+  await db.User.findOne({ where: { id: args.id } });
 
-const getUser = (args) =>
-  userData.filter((user) => user.userId === args.userId)[0];
+const getUsers = async (args) =>
+  await db.User.findAll({ where: args.name ? { name: args.name } : undefined });
 
-const getUsers = (args) =>
-  !!args.name ? userData.filter((user) => user.name === args.name) : userData;
-
-const updateUserName = (args) => {
-  userData = userData.map((user) =>
-    user.userId === args.userId ? { ...user, name: args.name } : user
-  );
+const updateUserName = async (args) => {
+  await db.User.update({ name: args.name }, { where: { id: args.id } });
   return getUser(args);
 };
+
+const updateUserEmail = async (args) => {
+  await db.User.update({ email: args.email }, { where: { id: args.id } });
+  return getUser(args);
+};
+
+const registerUser = async (args) =>
+  await db.User.create({ name: args.name, email: args.email });
 
 const app = express();
 
 app.use(
-  "/graphql/message",
-  expressGraphql({
-    schema: messageSchema,
-    rootValue: {
-      message: () => "Hellow World!",
-    },
-    graphiql: true,
-  })
-);
-
-app.use(
-  "/graphql/user",
+  "/graphql",
   expressGraphql({
     schema: userSchema,
     rootValue: {
       user: getUser,
       users: getUsers,
       updateUserName,
+      updateUserEmail,
+      registerUser,
     },
     graphiql: true,
   })
@@ -81,21 +61,3 @@ app.use(
 app.listen(3000, () =>
   console.log("Express GraphQL Server Now Running On localhost:3000/graphql")
 );
-
-/* 動作確認用 */
-const { Sequelize } = require("sequelize");
-
-const sequelize = new Sequelize("graphql_express_api", "root", "password", {
-  host: "db",
-  dialect: "mysql",
-});
-
-app.use("/", async (req, res, next) => {
-  try {
-    await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
-  } catch (error) {
-    console.error("Unable to connect to the database:", error);
-  }
-  res.send("respond with a resource");
-});
