@@ -81,3 +81,21 @@ app.use(
 app.listen(3000, () =>
   console.log("Express GraphQL Server Now Running On localhost:3000/graphql")
 );
+
+/* 動作確認用 */
+const { Sequelize } = require("sequelize");
+
+const sequelize = new Sequelize("graphql_express_api", "root", "password", {
+  host: "db",
+  dialect: "mysql",
+});
+
+app.use("/", async (req, res, next) => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection has been established successfully.");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+  res.send("respond with a resource");
+});
