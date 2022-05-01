@@ -1,5 +1,18 @@
 version: "3"
 services:
+  db:
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_DATABASE: graphql_express_api
+      MYSQL_ROOT_PASSWORD: password
+      TZ: "Asia/Tokyo"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
   app:
     build:
       context: .
@@ -11,3 +24,5 @@ services:
     command: yarn start
     ports:
       - "3000:3000"
+volumes:
+  mysql-vol:
