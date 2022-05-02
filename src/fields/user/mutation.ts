@@ -10,7 +10,8 @@ export const mutation = {
         type: new GraphQLNonNull(createUserInputType),
       },
     },
-    resolve: (_, args: { name: string; email: string }) => createUser(args),
+    resolve: (_: unknown, args: { name: string; email: string }) =>
+      createUser(args),
   },
   updateUser: {
     type: userType,
@@ -20,7 +21,7 @@ export const mutation = {
       },
     },
     resolve: (
-      _,
+      _: unknown,
       args: { id: number; name: string | undefined; email: string | undefined }
     ) => updateUser(args),
   },
