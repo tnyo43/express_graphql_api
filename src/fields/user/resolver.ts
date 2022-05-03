@@ -1,4 +1,4 @@
-import db from "../../../db/models";
+import db from "~db/models";
 
 export const fetchUser = async (args: { id: number }) =>
   await db.User.findOne({ where: { id: args.id } });
