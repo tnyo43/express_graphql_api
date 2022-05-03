@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 import UserFactory from "./user";
 
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.json")[env];
+const config = require(__dirname + "/../config.json")[env];
 
 const sequelize = new Sequelize(
   config.database,
