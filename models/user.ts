@@ -1,4 +1,4 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
+import { DataTypes, Model, Optional, Sequelize } from "sequelize";
 
 interface UserAttributes {
   id: number;
@@ -8,16 +8,20 @@ interface UserAttributes {
   readonly updatedAt: Date;
 }
 
-module.exports = (sequelize: Sequelize) => {
-  class User extends Model<UserAttributes> {
-    id: number;
-    name: string;
-    email: string;
+interface UserCreationAttributes
+  extends Optional<UserAttributes, "id" | "createdAt" | "updatedAt"> {}
+
+export default (sequelize: Sequelize) => {
+  class User extends Model<UserAttributes, UserCreationAttributes> {
+    id!: number;
+    name!: string;
+    email!: string;
 
     static associate(models: any) {
       // define association here
     }
   }
+
   User.init(
     {
       id: {
@@ -42,5 +46,6 @@ module.exports = (sequelize: Sequelize) => {
       modelName: "User",
     }
   );
+
   return User;
 };

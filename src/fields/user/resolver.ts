@@ -12,7 +12,7 @@ export const updateUser = async (args: {
   email: string | undefined;
 }) => {
   await db.User.update(
-    { name: args.name, emai: args.email },
+    { name: args.name, email: args.email },
     { where: { id: args.id } }
   );
   return fetchUser(args);

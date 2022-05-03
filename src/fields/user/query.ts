@@ -10,8 +10,8 @@ export const query = {
         type: new GraphQLNonNull(fetchUserListInputType),
       },
     },
-    resolve: (_: unknown, args: { name: string | undefined }) =>
-      fetchUserList(args),
+    resolve: (_: unknown, args: { user: { name: string | undefined } }) =>
+      fetchUserList(args.user),
   },
   fetchUser: {
     type: userType,
@@ -20,6 +20,7 @@ export const query = {
         type: new GraphQLNonNull(fetchUserInputType),
       },
     },
-    resolve: (_: unknown, args: { id: number }) => fetchUser(args),
+    resolve: (_: unknown, args: { user: { id: number } }) =>
+      fetchUser(args.user),
   },
 };
