@@ -1,4 +1,4 @@
-import { DataTypes, Model, Optional, Sequelize } from "sequelize";
+import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
 interface UserAttributes {
   id: number;
@@ -9,7 +9,7 @@ interface UserAttributes {
 }
 
 interface UserCreationAttributes
-  extends Optional<UserAttributes, "id" | "createdAt" | "updatedAt"> {}
+  extends Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
 
 export default (sequelize: Sequelize) => {
   class User extends Model<UserAttributes, UserCreationAttributes> {
@@ -27,23 +27,23 @@ export default (sequelize: Sequelize) => {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       name: {
         type: new DataTypes.STRING(128),
-        allowNull: false,
+        allowNull: false
       },
       email: {
         type: new DataTypes.STRING(128),
         allowNull: false,
-        unique: true,
+        unique: true
       },
       createdAt: { type: DataTypes.DATE },
-      updatedAt: { type: DataTypes.DATE },
+      updatedAt: { type: DataTypes.DATE }
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: 'User'
     }
   );
 

@@ -1,19 +1,19 @@
-import { GraphQLObjectType } from "graphql";
-import { userField } from "./user";
+import { GraphQLObjectType } from 'graphql';
+import { userField } from './user';
 
 const query = new GraphQLObjectType({
-  name: "Query",
+  name: 'Query',
   fields: {
-    ...userField.query,
-  },
+    ...userField.query
+  }
 });
 
 const mutation = new GraphQLObjectType({
-  name: "Mutation",
-  description: "The root query type.",
+  name: 'Mutation',
+  description: 'The root query type.',
   fields: {
-    ...userField.mutation,
-  },
+    ...userField.mutation
+  }
 });
 
 export const fields = { query, mutation };

@@ -1,8 +1,8 @@
-import { Sequelize } from "sequelize";
-import UserFactory from "./user";
+import { Sequelize } from 'sequelize';
+import UserFactory from './user';
 
-const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config.json")[env];
+const env = process.env.NODE_ENV || 'development';
+const config = require('~db/config.json')[env];
 
 const sequelize = new Sequelize(
   config.database,
@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
 const db = {
   sequelize,
   Sequelize,
-  User: UserFactory(sequelize),
+  User: UserFactory(sequelize)
 };
 
 export default db;
