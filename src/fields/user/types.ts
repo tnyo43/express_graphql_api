@@ -5,13 +5,16 @@ import {
   GraphQLObjectType,
   GraphQLString
 } from 'graphql';
+import { types } from '~/fields/utils';
 
 export const userType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
     id: { type: new GraphQLNonNull(GraphQLInt) },
     name: { type: new GraphQLNonNull(GraphQLString) },
-    email: { type: new GraphQLNonNull(GraphQLString) }
+    email: { type: new GraphQLNonNull(GraphQLString) },
+    createdAt: { type: types.GraphQLDate },
+    updatedAt: { type: types.GraphQLDate }
   })
 });
 
