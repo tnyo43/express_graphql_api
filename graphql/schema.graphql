@@ -8,3 +8,8 @@ type Query {
   fetchUserList(name: String): [User!]!
   fetchUser(id: Int!): User
 }
+
+type Mutation {
+  createUser(name: String!, email: String!): User
+  updateUser(id: Int!, name: String, email: String): User
+}

@@ -1,7 +1,16 @@
-import { mutation } from './mutation';
-import { query } from './query';
+import { createUser, fetchUser, fetchUserList, updateUser } from './resolver';
 
-export const userField = {
+const query = {
+  fetchUser,
+  fetchUserList
+};
+
+const mutation = {
+  createUser,
+  updateUser
+};
+
+export const userResolvers = {
   query,
   mutation
 };

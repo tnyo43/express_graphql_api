@@ -1,10 +1,7 @@
 import * as express from 'express';
 import { graphqlHTTP } from 'express-graphql';
-import { GraphQLSchema } from 'graphql';
-import { fields } from '~/fields';
+import { schema } from '~/fields';
 import * as cors from 'cors';
-
-const schema = new GraphQLSchema(fields);
 
 const app = express();
 

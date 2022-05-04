@@ -1,19 +1,22 @@
-import { GraphQLObjectType } from 'graphql';
-import { userField } from './user';
+import * as fs from 'fs';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { MutationResolvers, QueryResolvers } from '~/libs/generated/resolvers';
+import { userResolvers } from './user';
 
-const query = new GraphQLObjectType({
-  name: 'Query',
-  fields: {
-    ...userField.query
+const resolvers: {
+  Query: Required<QueryResolvers>;
+  Mutation: Required<MutationResolvers>;
+} = {
+  Query: {
+    ...userResolvers.query
+  },
+  Mutation: {
+    ...userResolvers.mutation
   }
+};
+
+const typeDefs = fs.readFileSync('./graphql/schema.graphql', {
+  encoding: 'utf8'
 });
 
-const mutation = new GraphQLObjectType({
-  name: 'Mutation',
-  description: 'The root query type.',
-  fields: {
-    ...userField.mutation
-  }
-});
-
-export const fields = { query, mutation };
+export const schema = makeExecutableSchema({ resolvers, typeDefs });
