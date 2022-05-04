@@ -6,17 +6,23 @@
   "scripts": {
     "prepare": "npm-run-all -p prepare:*",
     "prepare:db": "sequelize-cli db:migrate",
+    "prepare:graphql": "graphql-codegen",
     "start": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.0",
     "express-graphql": "^0.12.0",
-    "graphql": "^16.4.0",
+    "graphql": "15.7.2",
+    "graphql-request": "^4.2.0",
     "mysql2": "^2.3.3",
     "sequelize": "^6.19.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/typescript": "2.4.8",
+    "@graphql-codegen/typescript-resolvers": "^2.6.1",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/mysql": "^2.15.21",
