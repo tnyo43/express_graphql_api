@@ -17,7 +17,7 @@ export default (sequelize: Sequelize) => {
     name!: string;
     email!: string;
 
-    static associate(models: any) {
+    static associate(_models: any) {
       // define association here
     }
   }

@@ -19,6 +19,7 @@ module.exports = {
         named: 'never',
         asyncArrow: 'always'
       }
-    ]
+    ],
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
   }
 };
